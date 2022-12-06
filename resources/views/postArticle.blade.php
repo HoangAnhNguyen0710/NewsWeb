@@ -38,8 +38,9 @@
                                 <input type="text" placeholder="Nhập mô tả ngắn gọn ..." name="description" id="description"
                                        class="form-control mt-2 mb-3" required> --}}
                                 <label for="content">Nội dung :</label>
-                                <textarea placeholder="Nhập nội dung ..." class="form-control mb-3 mt-2" rows="5"
-                                          id="content" name="content" required></textarea>
+                                    <textarea placeholder="Nhập nội dung ..." class="form-control mb-3 mt-2" rows="5"
+                                    id="ckeditor1" name="ckeditor1" type="text"></textarea>
+                               
                             </div>
                             <button type="submit" id="submit-btn" class="btn btn-primary">Submit</button>
                         </form>
@@ -49,13 +50,23 @@
         </div>
     </div>
     </div>
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/classic/ckeditor.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-    function submit_form(event) {
+        ClassicEditor
+        .create( document.querySelector( '#ckeditor1' ) )
+        .then( newEditor => {
+        editor = newEditor;
+        } )
+        .catch( error => {
+            console.error( error );
+        } );
+        
+        function submit_form(event) {
                     event.preventDefault();
                     axios.post('/api/article', {
                         title: $('#title').val(),
-                        content: $('#content').val(),
+                        content: editor.getData(),
                         category_id: $('#category').val(),
                         creator_id: {{auth()->user()->id}},
                         display_num: 3,

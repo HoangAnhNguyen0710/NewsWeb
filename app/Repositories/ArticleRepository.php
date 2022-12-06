@@ -24,10 +24,11 @@ class ArticleRepository extends BaseRepository {
     }
 
     public function getOne($id) {
-        if(auth()->user()->role == "admin") {
+        if(auth()->user() && auth()->user()->role == "admin") {
             $result = $this->model->query()->with('user', 'category')->find($id);
         }
-        else $result = $this->model->query()->where('display', 1)->with('user', 'category')->find($id);
+        else 
+        $result = $this->model->query()->where('display', 1)->with('user', 'category')->find($id);
         if($result != null) {
             return $result->toArray();
         }

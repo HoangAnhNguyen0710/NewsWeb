@@ -26,6 +26,7 @@ class StoreArticleRequest extends FormRequest
     {
         return [
             'title' => 'required|max:255',
+            'content' => 'required',
             'creator_id' => [Rule::exists('users', 'id')->where('id', $this->creator_id)],
             'category_id' => ['required', Rule::exists('categories', 'id')->where('id', $this->category_id)],
         ];

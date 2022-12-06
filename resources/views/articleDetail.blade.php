@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <title>Post</title>
+    <title>{{ $article['title'] }}</title>
 @endsection
 @section('content')
     <div class="container">
@@ -19,14 +19,6 @@
                                 <a class="post-author--name" href="#" style="color: #000000;">
                                     {{ $article['user']['name'] }}
                                 </a>
-                                @auth
-                                    {{-- <button type="button" onclick="follow({{$blog->author_id}})"
-                                        class="post-author--follow-btn"><i id="follow-btn-icon"
-                                                                           class="fa {{$author->checkFollow ? 'fa-check' : 'fa-plus'}} follow-btn-icon"></i>
-                                    <span
-                                        class="follow-btn">{{$author->checkFollow ? 'Bỏ theo dõi' : 'Theo dõi'}}</span>
-                                </button> --}}
-                                @endauth
                                 <br><span class="post-author--posting-time">
                                     {{ Carbon\Carbon::parse($article['created_at'])->format('Y-m-d') }}
                                 </span>
@@ -72,7 +64,7 @@
                                     class="fa fa-heart-o" aria-hidden="true"></i>
                                 Like
                             </button>
-                            <button class="blog-likes-cmt--btn" onclick="loginRequest()"><i class="fa fa-comment"
+                            <button class="blog-likes-cmt--btn" onclick="commentRequest()"><i class="fa fa-comment"
                                     aria-hidden="true"></i>
                                 Comments
                             </button>
@@ -81,7 +73,7 @@
                                     class="fa {{ $liked ? 'fa-heart' : 'fa-heart-o' }}" aria-hidden="true"></i>
                                 Like
                             </button>
-                            <button class="blog-likes-cmt--btn"><a href="#comments-section"><i class="fa fa-comment"
+                            <button class="blog-likes-cmt--btn" onclick="commentRequest()"><a href="#comments-section"><i class="fa fa-comment"
                                         aria-hidden="true"></i>
                                     Comments</a>
                             </button>
@@ -100,6 +92,10 @@
     <script>
         function loginRequest() {
             alert('Bạn cần phải đăng nhập để thực hiện chức năng này');
+        }
+
+        function commentRequest() {
+            alert('Chức năng này hiện chưa ra mắt');
         }
 
         function liked(blog_id) {

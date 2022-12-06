@@ -39,7 +39,7 @@
 
                         </div>
                         <b><label for="content">Nội dung :</label></b>
-                        <textarea class="form-control mb-3 mt-2" rows="5" id="content" name="content" required>{{ $article['content'] }}</textarea>
+                        <textarea class="form-control mb-3 mt-2" rows="5" id="ckeditor1" name="content" required>{{ $article['content'] }}</textarea>
                         <b><label for="display">Display :</label></b>
                         <select class="form-select" id="display" name="display" style="height: 38px; margin : 1px"
                             required>
@@ -64,13 +64,23 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/classic/ckeditor.js"></script>
 <script>
+     ClassicEditor
+        .create( document.querySelector( '#ckeditor1' ) )
+        .then( newEditor => {
+        editor = newEditor;
+        } )
+        .catch( error => {
+            console.error( error );
+        } );
+
     function sub_form(event) {
         event.preventDefault();
         axios.post('/api/article', {
             id: {{$article['id']}},
             title: $('#title').val(),
-            content: $('#content').val(),
+            content: editor.getData(),
             category_id: $('#category').val(),
             display: $('#display').val(),
             display_num: $('#display_num').val(),
